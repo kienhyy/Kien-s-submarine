@@ -1,62 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Robot Control</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 20px;
-        }
-
-        h1 {
-            font-size: 24px;
-        }
-
-        button {
-            font-size: 18px;
-            margin: 10px;
-            padding: 10px 20px;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Control</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+ 
+        h1 {
+            font-size: 24px;
+        }
+ 
+        button {
+            font-size: 18px;
+            margin: 10px;
+            padding: 10px 20px;
+            user-select: none; /* Ngăn chặn chọn và copy */
+        }
+    </style>
 </head>
 <body>
-
-    <h1>Robot Control</h1>
-
-    <button id="forwardBtn" ontouchstart="startCommand('F')" ontouchend="stopCommand()">Forward</button>
-    <br>
-    <button id="backwardBtn" ontouchstart="startCommand('B')" ontouchend="stopCommand()">Backward</button>
-    <br>
-    <button id="leftBtn" ontouchstart="startCommand('L')" ontouchend="stopCommand()">Left</button>
-    <button id="rightBtn" ontouchstart="startCommand('R')" ontouchend="stopCommand()">Right</button>
-    <br>
-    <button id="stopBtn" ontouchstart="startCommand('S')" ontouchend="stopCommand()">Stop</button>
-
-    <script>
-        var isButtonDown = false;
-
-        function startCommand(command) {
-            if (!isButtonDown) {
-                isButtonDown = true;
-                sendCommand(command);
-            }
-        }
-
-        function stopCommand() {
-            isButtonDown = false;
-            // Send a stop command when the button is released.
-            sendCommand('S');
-        }
-
-        function sendCommand(command) {
-            var xhr = new XMLHttpRequest();
-            xhr.open("GET", "/?State=" + command, true);
-            xhr.send();
-        }
-    </script>
-
+ 
+    <h1>Robot Control</h1>
+ 
+    <button id="forwardBtn" ontouchstart="sendCommand('F')" ontouchend="sendCommand('S')">Forward</button>
+    <br>
+    <button id="backwardBtn" ontouchstart="sendCommand('B')" ontouchend="sendCommand('S')">Backward</button>
+    <br>
+    <button id="leftBtn" ontouchstart="sendCommand('L')" ontouchend="sendCommand('S')">Left</button>
+    <button id="rightBtn" ontouchstart="sendCommand('R')" ontouchend="sendCommand('S')">Right</button>
+    <br>
+    <!-- Removed the Stop button -->
+    
+    <script>
+        function sendCommand(command) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/?State=" + command, true);
+            xhr.send();
+        }
+    </script>
+ 
 </body>
 </html>
